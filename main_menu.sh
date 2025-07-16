@@ -123,26 +123,30 @@ show_main_menu() {
     echo "  3. Docker 镜像管理"
     echo "  4. Docker 系统清理"
     echo
+    echo -e "${WHITE}${BOLD}🔄 定时备份${NC}"
+    echo "  5. 定时备份管理"
+    echo "  6. 后台服务管理"
+    echo
     echo -e "${WHITE}${BOLD}🔧 系统维护${NC}"
-    echo "  5. 系统更新"
-    echo "  6. 磁盘清理"
-    echo "  7. 服务管理"
-    echo "  8. 用户管理"
+    echo "  7. 系统更新"
+    echo "  8. 磁盘清理"
+    echo "  9. 服务管理"
+    echo " 10. 用户管理"
     echo
     echo -e "${WHITE}${BOLD}📊 系统监控${NC}"
-    echo "  9. 实时系统监控"
-    echo " 10. 进程管理"
-    echo " 11. 网络连接"
-    echo " 12. 日志查看"
+    echo " 11. 实时系统监控"
+    echo " 12. 进程管理"
+    echo " 13. 网络连接"
+    echo " 14. 日志查看"
     echo
     echo -e "${WHITE}${BOLD}🛠️ 网络工具${NC}"
-    echo " 13. 端口扫描"
-    echo " 14. 网络诊断"
-    echo " 15. 防火墙管理"
+    echo " 15. 端口扫描"
+    echo " 16. 网络诊断"
+    echo " 17. 防火墙管理"
     echo
     echo -e "${WHITE}${BOLD}⚙️ 工具设置${NC}"
-    echo " 16. 工具配置"
-    echo " 17. 关于信息"
+    echo " 18. 工具配置"
+    echo " 19. 关于信息"
     echo
     echo -e "${WHITE}${BOLD}其他选项${NC}"
     echo " 0. 退出程序"
@@ -553,7 +557,7 @@ main() {
         show_system_info
         show_main_menu
         
-        read -p "请选择操作 (0-17): " choice
+        read -p "请选择操作 (0-19): " choice
         echo
         
         case $choice in
@@ -570,51 +574,73 @@ main() {
                 docker_system_cleanup
                 ;;
             5)
-                system_update
+                # 定时备份管理
+                if [ -f "backup_manager.sh" ]; then
+                    print_info "启动定时备份管理工具..."
+                    echo
+                    ./backup_manager.sh
+                else
+                    print_error "找不到备份管理脚本文件 backup_manager.sh"
+                    read -p "按 Enter 键返回主菜单..."
+                fi
                 ;;
             6)
+                # 后台服务管理
+                if [ -f "service_manager.sh" ]; then
+                    print_info "启动后台服务管理工具..."
+                    echo
+                    ./service_manager.sh
+                else
+                    print_error "找不到服务管理脚本文件 service_manager.sh"
+                    read -p "按 Enter 键返回主菜单..."
+                fi
+                ;;
+            7)
+                system_update
+                ;;
+            8)
                 print_info "磁盘清理功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            7)
+            9)
                 print_info "服务管理功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            8)
+            10)
                 print_info "用户管理功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            9)
+            11)
                 system_monitor
                 ;;
-            10)
+            12)
                 print_info "进程管理功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            11)
+            13)
                 print_info "网络连接功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            12)
+            14)
                 print_info "日志查看功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            13)
+            15)
                 print_info "端口扫描功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            14)
+            16)
                 network_diagnostic
                 ;;
-            15)
+            17)
                 print_info "防火墙管理功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            16)
+            18)
                 print_info "工具配置功能开发中..."
                 read -p "按 Enter 键返回主菜单..."
                 ;;
-            17)
+            19)
                 show_about
                 ;;
             0)
@@ -622,7 +648,7 @@ main() {
                 exit 0
                 ;;
             *)
-                print_warning "无效选择，请输入 0-17 之间的数字"
+                print_warning "无效选择，请输入 0-19 之间的数字"
                 read -p "按 Enter 键继续..."
                 ;;
         esac
